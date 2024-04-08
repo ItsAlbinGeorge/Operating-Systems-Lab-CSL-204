@@ -1,0 +1,330 @@
+                                                                        Program.No:1
+                                                              FAMILIARIZATION OF LINUX COMMANDS
+                                                              ==================================
+
+pwd
+***
+Use the pwd command to find out the path of the current working directory (folder) you’re in. The command will return an absolute (full) path, which is basically a path of all the directories that starts with a forward slash (/).
+Example:albin@albin-Lap:~/osalbin/S4CSE$ pwd
+               /home/albin/osalbin/S4CSE
+
+ls
+**
+The ls command is used to view the contents of a directory. By default, this command will display the contents of your current working directory.
+Example:albin@albin-Lap:~/osalbin$ ls
+               a.out  fcfs.c  priority.c  S4CSE  sjf.c
+• ls -R will list all the files in the sub-directories as well
+   Example:albin@albin-Lap:~/osalbin$ ls -R
+                   .:
+                   a.out  fcfs.c  priority.c  S4CSE  sjf.c
+
+                   ./S4CSE:
+• ls -a will show the hidden files
+   Example:albin@albin-Lap:~/osalbin$ ls -a
+                  .  ..  a.out  fcfs.c  priority.c  S4CSE  sjf.c
+• ls -al will list the files and directories with detailed information like the permissions, size, owner,                       etc...
+   Example:albin@albin-Lap:~/osalbin$ ls -al
+                  total 40
+                  drwxrwxr-x  3 albin albin  4096 May  2 20:00 .
+                  drwxr-x--- 18 albin albin  4096 May  2 19:56 ..
+                  -rwxrwxr-x  1 albin albin 16160 Apr 22 21:20 a.out
+                  -rw-rw-r--  1 albin albin  2537 Apr 22 20:23 fcfs.c
+                  -rw-rw-r--  1 albin albin  1362 Apr 22 21:20 priority.c
+                  drwxrwxr-x  2 albin albin  4096 May  2 20:00 S4CSE
+                  -rw-rw-r--  1 albin albin  2088 Apr 22 20:35 sjf.c
+
+mkdir
+*****
+Use mkdir command to make a new directory
+Example:albin@albin-Lap:~/osalbin$ mkdir S4CSE
+
+rmdir
+*****
+If you need to delete a directory, use the rmdir command. However, rmdir only allows you to delete empty directories.
+Example:albin@albin-Lap:~/osalbin$ rmdir S4CSE
+                albin@albin-Lap:~/osalbin$ ls
+                a.out  fcfs.c  priority.c  sjf.c
+                
+cd
+**
+If you need to change the working directory, use the cd command.
+Example:albin@albin-Lap:~/osalbin$ cd S4CSE
+
+mv
+**
+If you need to transfer a file from one directory to another or to change the name of a file, use mv command.
+Example:albin@albin-Lap:~/osalbin$ mv student.txt \Batch2021
+               albin@albin-Lap:~/osalbin$ cd Batch
+               albin@albin-Lap:~/osalbin/Batch2021$ ls
+               student.txt
+
+cat
+***
+cat (short for concatenate) is one of the most frequently used commands in
+Linux. It is used to list the contents of a file on the standard output.
+Here are other ways to use the cat command:
+• cat > filename creates a new file
+   Example:albin@albin-Lap:~/osalbin/Batch2021$ cat >studentz.txt
+                  Albin
+                  Alen
+                  Anandhu
+                  ^C
+• cat filename1 filename2>filename3 joins two files (1 and 2) and stores the
+   output of them in a new file (3)
+   Example:albin@albin-Lap:~/osalbin/Batch2021$ cat studentz.txt students.txt >student.txt
+                                               albin@albin-Lap:~/osalbin/Batch2021$ cat student.txt
+                                               Albin
+                                               Alen
+                                               Anandhu
+                                               Joyal
+                                               Arjun
+                                               Abhiram
+                                               Rejith
+• to convert a file to upper or lower case use, cat filename | tr a-z A-Z
+>output.txt
+  Example:albin@albin-Lap:~/osalbin/Batch2021$ cat student.txt|tr A-Z a-z>output.txt
+                 albin@albin-Lap:~/osalbin/Batch2021$ cat output.txt
+                 albin
+                 alen
+                 anandhu
+                 joyal
+                 arjun
+                 abhiram
+                 rejith
+
+cp
+**
+Use the cp command to copy files from the current directory to a different directory or make a copy of file with different name in the working directory.
+Example:albin@albin-Lap:~/osalbin/Batch2021$ cp student.txt result.txt
+               albin@albin-Lap:~/osalbin/Batch2021$ cat result.txt
+               Albin
+               Alen
+               Anandhu
+               Joyal
+               Arjun
+               Abhiram
+               Rejith
+rm
+**
+The rm command is used to delete files or directories and the contents within them.
+rm -r <directory> will delete the directory even if it is not empty.
+Example:albin@albin-Lap:~/osalbin$ rm -r Batch2021
+
+locate
+******
+You can use this command to locate a file.
+Example:albin@albin-Lap:~/osalbin$ locate student.txt
+               home/sem4/student.txt
+
+grep
+****
+It will search for the string in the file.
+Example:albin@albin-Lap:~/osalbin$ cat student.txt
+               albin
+               alen
+               anandhu
+               albin@albin-Lap:~/osalbin$ grep -i "albin" student.txt
+               albin
+
+head
+****
+The head command is used to view the first lines of any text file. By default, it
+will show the first ten lines, but you can change this number to your liking. For
+example, if you only want to show the first five lines, type head -n 5
+filename.ext.
+Example:albin@albin-Lap:~/osalbin$ head -2 student.txt
+               albin
+               alen
+
+tail
+****
+This one has a similar function to the head command, but instead of showing the first lines, the tail command will display the last ten lines of a text file. For example, tail -n 3 filename.ext will show last three lines.
+Example:albin@albin-Lap:~/osalbin$ tail -2 student.txt
+               alen
+               anandhu
+
+diff
+****
+Short for difference, the diff command compares the contents of two files line by line. After analyzing the files, it will output the lines that do not match.
+Example:albin@albin-Lap:~/osalbin$ cat a.txt
+               aaa
+               bbb
+               ccc
+               albin@albin-Lap:~/osalbin$ cat b.txt
+               aaa
+               bbb
+               ddd
+               albin@albin-Lap:~/osalbin$ diff a.txt b.txt
+               3c3
+               < ccc
+               ---
+               > ddd
+
+history
+*******
+Review the commands you’ve entered before .
+Example:albin@albin-Lap:~/osalbin$ history
+               1  gedit a.txt
+               2 gedit b.txt
+               3  cat a.txt
+               4  cat b.txt
+               5  diff a.txt b.txt
+               6  history
+
+man
+***
+It will show the manual instruction of commands.
+Example:albin@albin-Lap:~$ man mkdir
+MKDIR(1)                         User Commands                        MKDIR(1)
+
+NAME
+       mkdir - make directories
+
+SYNOPSIS
+       mkdir [OPTION]... DIRECTORY...
+
+DESCRIPTION
+       Create the DIRECTORY(ies), if they do not already exist.
+
+       Mandatory  arguments  to  long  options are mandatory for short options
+       too.
+
+       -m, --mode=MODE
+              set file mode (as in chmod), not a=rwx - umask
+
+       -p, --parents
+              no error if existing, make parent directories as needed
+
+       -v, --verbose
+              print a message for each created directory
+
+       -Z     set SELinux security context of each created  directory  to  the
+              default type
+
+       --context[=CTX]
+              like  -Z,  or  if CTX is specified then set the SELinux or SMACK
+              security context to CTX
+
+       --help display this help and exit
+
+       --version
+              output version information and exit
+
+AUTHOR
+       Written by David MacKenzie.
+
+REPORTING BUGS
+       GNU coreutils online help: <https://www.gnu.org/software/coreutils/>
+       Report any translation bugs to <https://translationproject.org/team/>
+
+COPYRIGHT
+       Copyright © 2020 Free Software Foundation, Inc.   License  GPLv3+:  GNU
+       GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+       This  is  free  software:  you  are free to change and redistribute it.
+       There is NO WARRANTY, to the extent permitted by law.
+
+SEE ALSO
+       mkdir(2)
+
+       Full documentation <https://www.gnu.org/software/coreutils/mkdir>
+       or available locally via: info '(coreutils) mkdir invocation'
+
+GNU coreutils 8.32               February 2022                        MKDIR(1)
+
+echo
+****
+This command is used to move some data into the output or a file.
+echo string > filename will replace the content of file with string
+Example:albin@albin-Lap:~/osalbin$ echo aaa >a.txt
+                albin@albin-Lap:~/osalbin$ cat a.txt
+                aaa
+echo string >> filename will append the string at the end of file.
+Example:albin@albin-Lap:~/osalbin$ echo bbb >>a.txt
+               albin@albin-Lap:~/osalbin$ cat a.txt
+               aaa
+               bbb
+wget
+****
+you can even download files from the internet with the help of
+the wget command. To do so, simply type wget followed by the download link.
+
+EXERCISE
+1.Create a directory CSE.
+   albin@albin-Lap:~$ mkdir CSE
+
+2.Create a file named “student.txt” ion CSE directory contains name of 10 students in your class using cat command.
+   albin@albin-Lap:~$ cd CSE
+   albin@albin-Lap:~/CSE$ cat >student.txt
+   Albin
+   Alen
+   Anandhu
+   Arjun
+   Abhiram
+   Joyal
+   Rejith
+   Vysakh
+   Lino
+   Nizam
+   ^C
+
+3.Display the file “student.txt” on the screen using “cat” command.
+   albin@albin-Lap:~/CSE$ cat student.txt
+   Albin
+   Alen
+   Anandhu
+   Arjun
+   Abhiram
+   Joyal
+   Rejith
+   Vysakh
+   Lino
+   Nizam
+
+4.Copy the file “student.txt” into “studentcopy.txt”.
+   albin@albin-Lap:~/CSE$ cp student.txt studentcopy.txt
+   albin@albin-Lap:~/CSE$ cat studentcopy.txt
+   Albin
+   Alen
+   Anandhu
+   Arjun
+   Abhiram
+   Joyal
+   Rejith
+   Vysakh
+   Lino
+   Nizam  
+
+5.Display the name of first three students in “student.txt” file.
+   albin@albin-Lap:~/CSE$ head -3 student.txt
+   Albin
+   Alen
+   Anandhu
+
+6.Display the name of last five students in “student.txt” file.
+   albin@albin-Lap:~/CSE$ tail -5 student.txt
+   Joyal
+   Rejith
+   Vysakh
+   Lino
+   Nizam
+
+7.Create a subdirectory “S4CSE”.
+   albin@albin-Lap:~/CSE$ mkdir S4CSE
+
+8.Move the file “student.txt” into “S4CSE” subdirectory.
+  albin@albin-Lap:~/CSE$ mv student.txt \S4CSE
+9.Create new subdirectory called “Batch2021”.
+   albin@albin-Lap:~/CSE$ cd S4CSE
+   albin@albin-Lap:~/CSE/S4CSE$ mkdir Batch2021
+
+10.Move the file “student.txt” in the “S4CSE” directory into the “Batch2021” directory.
+     albin@albin-Lap:~/CSE$ cd S4CSE
+     albin@albin-Lap:~/CSE/S4CSE$ mv student.txt \Batch2021
+
+11.Delete the file “student.txt” from “Batch2021” directory.
+     albin@albin-Lap:~/CSE/S4CSE$ cd Batch2021
+     albin@albin-Lap:~/CSE/S4CSE/Batch2021$ rm student.txt
+
+12.Remove the “Batch2021” subdirectory.
+     albin@albin-Lap:~/CSE/S4CSE/Batch2021$ cd ..
+     albin@albin-Lap:~/CSE/S4CSE$ rmdir Batch2021

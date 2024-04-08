@@ -1,0 +1,196 @@
+                                                                   Program.No:2
+                                                        FAMILIARIZATION OF SYSTEM CALLS
+                                                        ================================
+getpid( ) & getppid( )
+**********************
+#include<stdio.h>
+#include<unistd.h>
+int main()
+{
+  printf("Current process id is:%d and its parent process id is:%d\n",getpid(),getppid());
+  return 0;
+}
+/*
+OUTPUT
+=======
+albin@albin-Lap:~/osalbin$ gedit test1.c
+albin@albin-Lap:~/osalbin$ gcc test1.c
+albin@albin-Lap:~/osalbin$ ./a.out
+Current process id is:2530 and its parent process id is:2515
+*/
+
+fork( )
+*******
+#include<stdio.h>
+#include<unistd.h>
+int main()
+{
+   fork();
+   printf("Process id:%d\n",getpid());
+   return 0;
+}
+/*
+OUTPUT
+=======
+albin@albin-Lap:~/osalbin$ gedit test2.c
+albin@albin-Lap:~/osalbin$ gcc test2.c
+albin@albin-Lap:~/osalbin$ ./a.out
+Process id:2863
+albin@albin-Lap:~/osalbin$ Process id:2864
+*/
+
+fork( )
+*******
+#include<stdio.h>
+#include<unistd.h>
+int main()
+{
+   int p=fork();
+   printf("Process id:%d\n",getpid());
+   printf("Value of P:%d\n",p);
+   return 0;
+}
+/*
+OUTPUT
+=======
+albin@albin-Lap:~/osalbin$ gedit test3.c
+albin@albin-Lap:~/osalbin$ gcc test3.c
+albin@albin-Lap:~/osalbin$ ./a.out
+Process id:2973
+Value of P:2974
+albin@albin-Lap:~/osalbin$ Process id:2974
+Value of P:0
+*/
+
+wait( )
+*******
+#include<stdio.h>
+#include<unistd.h>
+int main()
+{
+   int p=fork();
+   printf("\nProcess ID-%d   Parent process ID-%d   Child process ID-%d\n",getpid(),getppid(),p);
+   wait(NULL);
+   return 0;
+}
+/*
+OUTPUT
+=======
+albin@albin-Lap:~/osalbin$ gedit test4.c
+albin@albin-Lap:~/osalbin$ gcc test4.c
+albin@albin-Lap:~/osalbin$ ./a.out
+
+Process ID-3115   Parent process ID-3089   Child process ID-3116
+
+Process ID-3116   Parent process ID-3115   Child process ID-0
+*/
+
+exec( )
+*******
+program1.c
+#include<stdio.h>
+#include<unistd.h>
+void main()
+{
+   printf("Program1\n");
+   printf("Transferred to Program2\n");
+   execv("./program2",NULL);
+   printf("Backfrom Program2\n");
+}
+
+program2.c
+#include<stdio.h>
+#include<unistd.h>
+void main()
+{
+   printf("Program2 reached\n");
+   printf("Program2 end\n");
+}
+/*
+OUTPUT
+=======
+albin@albin-Lap:~/osalbin$ gedit program1.c
+albin@albin-Lap:~/osalbin$ gedit program2.c
+albin@albin-Lap:~/osalbin$ gcc -o program1 program1.c
+albin@albin-Lap:~/osalbin$ gcc -o program2 program2.c
+albin@albin-Lap:~/osalbin$ ./program1
+Program1
+Transferred to Program2
+Program2 reached
+Program2 end
+*/
+
+exit( )
+*******
+#include<stdio.h>
+#include<stdlib.h>
+#include<unistd.h>
+#include<errno.h>
+int main()
+{
+   extern int errno;
+   int p=fork();
+   if(p==0)
+   {
+      FILE *fp;
+      char File[20];
+      printf("Enter the name of file to begin:");
+      scanf("%s",File);
+      fp=fopen(File,"r");
+      if(fp==NULL)
+         exit(errno);
+   }
+   else
+   {
+      int status;
+      waitpid(p,&status,0);
+      if(WIFEXITED(status))
+          printf("Exit code was %d \n",WEXITSTATUS(status));
+   }
+   return 0;
+}
+/*
+OUTPUT
+=======
+albin@albin-Lap:~/osalbin$ gedit test5.c
+albin@albin-Lap:~/osalbin$ gcc test5.c
+albin@albin-Lap:~/osalbin$ ./a.out
+Enter the name of file to begin:albin.txt
+Exit code was 0
+*/
+
+opendir( ),closedir( )
+**********************
+#include<dirent.h>
+#include<stdio.h>
+#include<stdlib.h>
+int main(int argc,char *argr[])
+{
+   if(argc!=2)
+   {
+      printf("\nError in directoryname\n");
+      exit(0);
+   }
+   DIR *mydir=opendir(argr[1]);
+   struct dirent *myFile;
+   if(mydir==NULL)
+   {
+      printf("Directory could not open\n");
+      exit(1);
+   }
+   while((myFile=readdir(mydir))!=NULL)
+      printf("%s\n",myFile->d_name);
+   closedir(mydir);
+   return 0;
+}
+/*
+OUTPUT
+=======
+albin@albin-Lap:~/osalbin$ gedit test6.c
+albin@albin-Lap:~/osalbin$ mkdir mydir
+albin@albin-Lap:~/osalbin$ gcc test6.c
+albin@albin-Lap:~/osalbin$ ./a.out mydir
+..
+.
+sample.txt
+*/
